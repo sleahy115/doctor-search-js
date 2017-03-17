@@ -7,9 +7,10 @@ $(document).ready(function(){
     var state = $('#state').val();
     var new_doctor = new Doctor();
     new_doctor.getDoctor(ailment,state, new_doctor, function (){
-      var doctors = new_doctor;
-      console.log(doctors);
-      $('#output').prepend(doctors);
+      var doctor_name = new_doctor.doctor_name;
+      var address = new_doctor.address;
+      var phone_number = new_doctor.phone_number;
+      $('#output').prepend(doctor_name, + " " + address, " " + phone_number);
     });
   });
 });
