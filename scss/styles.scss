@@ -1,0 +1,30 @@
+$blue : #003B6F;
+.jumbotron{
+  background-color: $blue;
+  text-align: center;
+  color: white;
+}
+label{
+  font-size: 30px;
+  color: $blue;
+}
+
+select{
+  font-size: 20px;
+  color: $blue;
+}
+
+button{
+  background-color: $blue;
+  color: white;
+}
+#output{
+  display: none;
+  background-color: $blue;
+  color: white;
+  padding: 30px;
+  font-family: sans-serif;
+  border-color: gray;
+  border-style: outset;
+  border-width: thick;
+}
