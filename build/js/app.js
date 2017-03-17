@@ -10,16 +10,11 @@ function Doctor () {
     this.phone_number = "";
 }
 
-Doctor.prototype.testMethod = function () {
-  alert("this works");
-};
 
 Doctor.prototype.getDoctor = function (ailment, state) {
-  console.log(ailment);
-  console.log(state);
   $.get('https://api.betterdoctor.com/2016-03-01/doctors?query=' + ailment + '&location=' + state + '&skip=0&limit=10&user_key=' + apiKey)
   .then(function(result) {
-      console.log(result);
+      console.log(JSON.stringify(result));
     })
    .fail(function(error){
       console.log("fail");
@@ -35,24 +30,11 @@ $(document).ready(function(){
   $('.doctor_search').submit(function(event){
     event.preventDefault();
     var ailment = $('#ailment').val();
-    $('#output').prepend('<p>Thank you, ' + ailment + ' has been added to our list!</p>');
+    var state = $('#state').val();
+    $('#output').prepend('<p>Thank you, ' + ailment + state + '</p>');
     new_doctor = new Doctor();
-    new_doctor.testMethod();
+    new_doctor.getDoctor(ailment,state);
   });
 });
-
-// $(document).ready(function(){
-//   $('.doctor-search').submit(function(event) {
-//     event.preventDefault();
-//     var ailment = $('#ailment').val();
-//     console.log(ailment);
-//     var state = $('#state').val();
-//     console.log(state);
-//     new_doctor = new Doctor();
-//     new_doctor.getDoctor(ailment, state);
-//     ('#output').text("your state is " + state);
-//   });
-//
-// });
 
 },{"./../js/doctor.js":2}]},{},[3]);
