@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/sleahy115/doctor-search-js#readme",
   "devDependencies": {
+    "bower-files": "^3.14.1",
+    "browser-sync": "^2.18.8",
     "browserify": "^14.1.0",
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.4",
