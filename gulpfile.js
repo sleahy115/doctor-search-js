@@ -1,3 +1,4 @@
+
 var gulp = require("gulp");
 var source = require("vinyl-source-stream");
 var browserify = require("browserify");
@@ -19,7 +20,8 @@ var lib = require('bower-files')({
   }
 });
 var browserSync = require('browser-sync').create();
-
+// var sass = require('gulp-sass');
+// var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('concatInterface', function() {
   return gulp.src(['./js/*-interface.js'])
@@ -34,17 +36,18 @@ gulp.task('jsBrowserify', ['concatInterface'], function() {
     .pipe(gulp.dest('./build/js'));
 });
 
-gulp.task("minifyScripts", ["jsBrowserify"], function(){
-  return gulp.src("./build/js/app.js")
-  .pipe(uglify())
-  .pipe(gulp.dest("./build/js"));
-});
-
 gulp.task('jshint', function(){
   return gulp.src(['js/*.js'])
   .pipe(jshint())
   .pipe(jshint.reporter('default'));
 });
+
+gulp.task("minifyScripts", ["jsBrowserify"], function(){
+  return gulp.src("./build/js/app.js")
+    .pipe(uglify())
+    .pipe(gulp.dest("./build/js"));
+});
+
 
 gulp.task('build', ['clean'], function(){
   if (buildProduction) {
@@ -94,4 +97,13 @@ gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function(){
 
 gulp.task('bowerBuild', ['bower'], function(){
   browserSync.reload();
+});
+
+gulp.task('cssBuild', function() {
+  return gulp.src(['scss/*.scss'])
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./build/css'))
+    .pipe(browserSync.stream());
 });
