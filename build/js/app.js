@@ -11,7 +11,7 @@ function Doctor () {
 }
 
 Doctor.prototype.testMethod = function () {
-  alert("this works")
+  alert("this works");
 };
 
 Doctor.prototype.getDoctor = function (ailment, state) {
