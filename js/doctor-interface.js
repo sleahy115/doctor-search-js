@@ -5,8 +5,11 @@ $(document).ready(function(){
     event.preventDefault();
     var ailment = $('#ailment').val();
     var state = $('#state').val();
-    $('#output').prepend('<p>Thank you, ' + ailment + state + '</p>');
-    new_doctor = new Doctor();
-    new_doctor.getDoctor(ailment,state);
+    var new_doctor = new Doctor();
+    new_doctor.getDoctor(ailment,state, new_doctor, function (){
+      var doctors = new_doctor.doctor_name;
+      console.log(doctors);
+      $('#output').prepend(doctors);
+    });
   });
 });

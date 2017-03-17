@@ -11,14 +11,20 @@ function Doctor () {
 }
 
 
-Doctor.prototype.getDoctor = function (ailment, state) {
+Doctor.prototype.getDoctor = function (ailment, state, new_doctor, callback) {
   $.get('https://api.betterdoctor.com/2016-03-01/doctors?query=' + ailment + '&location=' + state + '&skip=0&limit=10&user_key=' + apiKey)
   .then(function(result) {
-      console.log(JSON.stringify(result));
+      var doctor_name = result.data[0].practices[0].name;
+      new_doctor.doctor_name = doctor_name;
+      console.log(new_doctor.doctor_name);
+      callback();
     })
-   .fail(function(error){
-      console.log("fail");
-    });
+   .fail(function(undefined){
+       alert ("sorry there are no doctors matching this search");
+    })
+    .fail(function(error){
+       alert ("sorry there are no doctors matching this search");
+     });
 };
 
 exports.DoctorModule = Doctor;
@@ -31,9 +37,12 @@ $(document).ready(function(){
     event.preventDefault();
     var ailment = $('#ailment').val();
     var state = $('#state').val();
-    $('#output').prepend('<p>Thank you, ' + ailment + state + '</p>');
-    new_doctor = new Doctor();
-    new_doctor.getDoctor(ailment,state);
+    var new_doctor = new Doctor();
+    new_doctor.getDoctor(ailment,state, new_doctor, function (){
+      var doctors = new_doctor.doctor_name;
+      console.log(doctors);
+      $('#output').prepend(doctors);
+    });
   });
 });
 
