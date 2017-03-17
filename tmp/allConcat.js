@@ -7,7 +7,7 @@ $(document).ready(function(){
     var state = $('#state').val();
     var new_doctor = new Doctor();
     new_doctor.getDoctor(ailment,state, new_doctor, function (){
-      var doctors = new_doctor.doctor_name;
+      var doctors = new_doctor;
       console.log(doctors);
       $('#output').prepend(doctors);
     });
