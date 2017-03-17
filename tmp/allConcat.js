@@ -6,9 +6,10 @@ $(document).ready(function() {
         var ailment = $('#ailment').val();
         var state = $('#state').val();
         var new_doctor = new Doctor();
+        $('#output').empty();
         new_doctor.getDoctor(ailment, state, new_doctor, function() {
-            new_doctor.doctors.forEach(function(element) {
-                $('#output').prepend('<li>' + element + '</li>');
+            new_doctor.doctors.forEach(function(doctor_name) {
+                $('#output').prepend('<li>' + doctor_name + '</li>');
             });
         });
     });
