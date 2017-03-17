@@ -8,9 +8,12 @@ $(document).ready(function() {
         var new_doctor = new Doctor();
         $('#output').empty();
         new_doctor.getDoctor(ailment, state, new_doctor, function() {
-            new_doctor.doctors.forEach(function(doctor_name) {
-                $('#output').prepend('<li>' + doctor_name + '</li>');
-            });
+        for(var i = 0; i< new_doctor.doctor_name.length; i++) {
+          $('#output').append('<h3>' + new_doctor.doctor_name[i] + '</h3>');
+          $('#output').append('<li>' + new_doctor.address[i] + '</li>');
+          $('#output').append('<li>' + new_doctor.phone_number[i] + '</li>');
+        }
+        //
         });
     });
 });

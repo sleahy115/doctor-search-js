@@ -5,17 +5,15 @@ exports.apiKey = "acce9e17d09dbcefe3d4fe39ec0c19be";
 var apiKey = require('./../.env').apiKey;
 
 function Doctor() {
-    this.doctor_name = "";
-    this.address = "";
-    this.phone_number = "";
-    this.doctors = [];
+    this.doctor_name = [];
+    this.address = [];
+    this.phone_number = [];
 }
 
 
 Doctor.prototype.getDoctor = function(ailment, state, new_doctor, callback) {
 $.get('https://api.betterdoctor.com/2016-03-01/doctors?query=' + ailment + '&location=' + state + '&skip=0&limit=10&user_key=' + apiKey)
     .then(function(result) {
-      console.log(result.data.length);
         if (result.data.length === 0) {
             $('#output').text("sorry there are no doctors matching this search");
         } else {
@@ -24,7 +22,10 @@ $.get('https://api.betterdoctor.com/2016-03-01/doctors?query=' + ailment + '&loc
                 var doctor_name = result.data[i].practices[0].name;
                 var address = result.data[i].practices[0].visit_address.street;
                 var phone_number = result.data[i].practices[0].phones[0].number;
-                new_doctor.doctors.push(address, phone_number, doctor_name);
+                new_doctor.doctor_name.push(doctor_name);
+                new_doctor.address.push(address);
+                new_doctor.phone_number.push(phone_number);
+                console.log(new_doctor.doctor_name);
             }
         }
         callback();
@@ -47,9 +48,12 @@ $(document).ready(function() {
         var new_doctor = new Doctor();
         $('#output').empty();
         new_doctor.getDoctor(ailment, state, new_doctor, function() {
-            new_doctor.doctors.forEach(function(doctor_name) {
-                $('#output').prepend('<li>' + doctor_name + '</li>');
-            });
+        for(var i = 0; i< new_doctor.doctor_name.length; i++) {
+          $('#output').append('<h3>' + new_doctor.doctor_name[i] + '</h3>');
+          $('#output').append('<li>' + new_doctor.address[i] + '</li>');
+          $('#output').append('<li>' + new_doctor.phone_number[i] + '</li>');
+        }
+        //
         });
     });
 });
